@@ -4,3 +4,4 @@ dual/
 result
 .direnv
 .devenv
+.luarc.json
