@@ -140,6 +140,14 @@ cmp.accept = function()
   return true
 end
 
+cmp.accept_fallback = function (key)
+  cmp.accept()
+
+  require('blink.cmp.keymap').run_non_blink_keymap('i', key)
+
+  return true
+end
+
 cmp.select_prev = function()
   if not cmp.windows.autocomplete.win:is_open() then return end
   vim.schedule(cmp.windows.autocomplete.select_prev)
