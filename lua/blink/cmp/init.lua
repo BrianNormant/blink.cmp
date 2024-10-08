@@ -127,17 +127,27 @@ cmp.hide = function()
   return true
 end
 
-cmp.accept = function()
-  local item = cmp.windows.autocomplete.get_selected_item()
-  if item == nil then return end
+local insert_key = function(key)
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local text = vim.api.nvim_replace_termcodes(key, true, true, true)
+    vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, { text })
+    vim.api.nvim_win_set_cursor(0, { row, col + #text })
+end
 
-  -- create an undo point
-  if require('blink.cmp.config').accept.create_undo_point then
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-g>u', true, true, true), 'n', true)
+cmp.accept = function(key)
+  local item = cmp.windows.autocomplete.get_selected_item()
+  if item then
+    -- create an undo point
+    if require('blink.cmp.config').accept.create_undo_point then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-g>u', true, true, true), 'n', true)
+    end
+    vim.schedule(function() require('blink.cmp.accept')(item) end)
+    if key then vim.schedule(function() insert_key(key) end) end
   end
 
-  vim.schedule(function() require('blink.cmp.accept')(item) end)
-  return true
+  require('blink.cmp.keymap').run_non_blink_keymap('i', key)
+
+  if item then return true end
 end
 
 cmp.select_prev = function()
