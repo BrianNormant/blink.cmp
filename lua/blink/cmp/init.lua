@@ -143,6 +143,7 @@ end
 cmp.accept_fallback = function (key)
   cmp.accept()
 
+  vim.notify("auto_select!")
   require('blink.cmp.keymap').run_non_blink_keymap('i', key)
 
   return true
