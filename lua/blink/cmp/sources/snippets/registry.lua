@@ -113,6 +113,7 @@ function registry:snippet_to_completion_item(snippet)
     insertTextFormat = vim.lsp.protocol.InsertTextFormat.Snippet,
     insertText = type(snippet.body) == 'string' and snippet.body or table.concat(snippet.body, '\n'),
     description = snippet.description,
+    blink = { source = "Snippet" },
   }
 end
 

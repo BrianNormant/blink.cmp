@@ -120,6 +120,7 @@ function lsp:get_completions(context, callback)
         -- it doesn't seem to return itemDefaults either
         item.kind = item.kind or vim.lsp.protocol.CompletionItemKind.Text
         item.client_id = client_id
+        item.blink = { source = "LSP" }
 
         -- todo: make configurable
         if item.deprecated or (item.tags and vim.tbl_contains(item.tags, 1)) then item.score_offset = -2 end

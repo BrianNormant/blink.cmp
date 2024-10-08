@@ -76,6 +76,7 @@ function lib.entry_to_completion_item(entry, dirname, opts)
     insertText = is_dir and entry.name .. '/' or entry.name,
     word = opts.trailing_slash and entry.name or nil,
     data = { path = entry.name, full_path = dirname .. '/' .. entry.name, type = entry.type, stat = entry.stat },
+    blink = { source = 'Path' },
   }
 end
 

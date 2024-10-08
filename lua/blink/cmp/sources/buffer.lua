@@ -40,6 +40,7 @@ local function words_to_items(words)
       kind = vim.lsp.protocol.CompletionItemKind.Text,
       insertTextFormat = vim.lsp.protocol.InsertTextFormat.Snippet,
       insertText = word,
+      blink = { source = "Buffer" },
     })
   end
   return items

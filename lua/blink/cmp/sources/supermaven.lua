@@ -82,6 +82,7 @@ function supermaven:get_completions(context, callback)
 		},
 		dup = 0,
 		cusor_column = cursor.col,
+		blink = { source = "Supermaven", },
 	}}
 
 	callback({
