@@ -31,6 +31,7 @@ end
 function supermaven:get_completions(context, callback)
 
 	local inlay_instance = CompletionPreview:get_inlay_instance()
+	CompletionPreview:dispose_inlay()
 	if not inlay_instance then
 		callback({
 			is_incomplete_backward = false,
