@@ -39,7 +39,7 @@ function keymap.setup(opts)
         if insert_keys_to_commands[key] == nil then insert_keys_to_commands[key] = {} end
         table.insert(insert_keys_to_commands[key], command)
       end
-      if is_insert_command then
+      if is_insert_command_fallback then
         if insert_keys_to_commands_fallback[key] == nil then insert_keys_to_commands_fallback[key] = {} end
         table.insert(insert_keys_to_commands_fallback[key], command)
       end
