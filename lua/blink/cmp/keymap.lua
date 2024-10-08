@@ -11,16 +11,24 @@ local insert_commands = {
   'scroll_documentation_up',
   'scroll_documentation_down',
 }
+local insert_commands_fallback = {
+  'accept_fallback',
+}
 local snippet_commands = { 'snippet_forward', 'snippet_backward' }
 
 --- @param opts blink.cmp.KeymapConfig
 function keymap.setup(opts)
   local insert_keys_to_commands = {}
+  local insert_keys_to_commands_fallback = {}
   local snippet_keys_to_commands = {}
   for command, keys in pairs(opts) do
     local is_snippet_command = vim.tbl_contains(snippet_commands, command)
     local is_insert_command = vim.tbl_contains(insert_commands, command)
-    if not is_snippet_command and not is_insert_command then error('Invalid command in keymap config: ' .. command) end
+    local is_insert_command_fallback = vim.tbl_contains(insert_commands_fallback, command)
+    if not is_snippet_command and
+       not is_insert_command  and
+       not is_insert_command_fallback
+       then error('Invalid command in keymap config: ' .. command) end
 
     -- convert string to string[] for consistency
     if type(keys) == 'string' then keys = { keys } end
@@ -30,6 +38,10 @@ function keymap.setup(opts)
       if is_insert_command then
         if insert_keys_to_commands[key] == nil then insert_keys_to_commands[key] = {} end
         table.insert(insert_keys_to_commands[key], command)
+      end
+      if is_insert_command then
+        if insert_keys_to_commands_fallback[key] == nil then insert_keys_to_commands_fallback[key] = {} end
+        table.insert(insert_keys_to_commands_fallback[key], command)
       end
       if is_snippet_command then
         if snippet_keys_to_commands[key] == nil then snippet_keys_to_commands[key] = {} end
@@ -47,6 +59,10 @@ function keymap.setup(opts)
       keymap.set('i', key, function()
         for _, command in ipairs(insert_keys_to_commands[key] or {}) do
           local did_run = require('blink.cmp')[command]()
+          if did_run then return end
+        end
+        for _, command in ipairs(insert_keys_to_commands_fallback[key] or {}) do
+          local did_run = require('blink.cmp')[command](key)
           if did_run then return end
         end
         for _, command in ipairs(snippet_keys_to_commands[key] or {}) do
