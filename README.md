@@ -37,6 +37,8 @@
   version = 'v0.*',
   -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
   -- build = 'cargo build --release',
+  -- On musl libc based systems you need to add this flag
+  -- build = 'RUSTFLAGS="-C target-feature=-crt-static" cargo build --release',
 
   opts = {
     highlight = {
@@ -99,8 +101,8 @@ For LazyVim/distro users, you can disable nvim-cmp via:
     show = '<C-space>',
     hide = '<C-e>',
     accept = '<Tab>',
-    select_prev = { '<Up>', '<C-k>' },
-    select_next = { '<Down>', '<C-j>' },
+    select_prev = { '<Up>', '<C-p>' },
+    select_next = { '<Down>', '<C-n>' },
 
     show_documentation = {},
     hide_documentation = {},
@@ -245,6 +247,8 @@ For LazyVim/distro users, you can disable nvim-cmp via:
       -- which directions to show the window,
       -- falling back to the next direction when there's not enough space
       direction_priority = { 's', 'n' },
+      -- whether to preselect the first item in the completion list
+      preselect = true,
       -- Controls how the completion items are rendered on the popup window
       -- 'simple' will render the item's kind icon the left alongside the label
       -- 'reversed' will render the label on the left and the kind icon + name on the right

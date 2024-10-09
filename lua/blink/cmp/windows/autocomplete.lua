@@ -173,7 +173,6 @@ function autocomplete.select_prev()
   else
     line = line - 1
   end
-
   autocomplete.set_has_selected(true)
 
   autocomplete.win:set_option_values('cursorline', true)
