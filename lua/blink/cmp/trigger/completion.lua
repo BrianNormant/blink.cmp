@@ -19,11 +19,22 @@ local trigger = {
 }
 
 function trigger.activate_autocmds()
+  local normal_keys = {
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+    "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "-", "=", ";", ":", ",", ".", "/", "?", "|",
+    "(", ")", "[", "]", "{", "}", "<", ">", "'", "\"", "`", " "
+  }
   local last_char = ''
   vim.api.nvim_create_autocmd('InsertCharPre', {
-    callback = function() last_char = vim.v.char end,
+    callback = function()
+      last_char = vim.v.char
+      if not require('blink.cmp.config').accept.preselect then
+        require('blink.cmp').accept(last_char)
+      end
+    end,
   })
-
   -- decide if we should show the completion window
   vim.api.nvim_create_autocmd('TextChangedI', {
     callback = function()

@@ -24,10 +24,7 @@ function keymap.setup(opts)
   for command, keys in pairs(opts) do
     local is_snippet_command = vim.tbl_contains(snippet_commands, command)
     local is_insert_command = vim.tbl_contains(insert_commands, command)
-    local is_insert_command_fallback = vim.tbl_contains(insert_commands_fallback, command)
-    if not is_snippet_command and
-       not is_insert_command  and
-       not is_insert_command_fallback
+    if not is_snippet_command and not is_insert_command
        then error('Invalid command in keymap config: ' .. command) end
 
     -- convert string to string[] for consistency
@@ -69,7 +66,6 @@ function keymap.setup(opts)
           local did_run = require('blink.cmp')[command]()
           if did_run then return end
         end
-
         return keymap.run_non_blink_keymap('i', key)
       end)
     end
