@@ -13,7 +13,6 @@
 --- @class blink.cmp.AcceptConfig
 --- @field create_undo_point boolean Create an undo point when accepting a completion item
 --- @field auto_brackets blink.cmp.AutoBracketsConfig
---- @field preselect boolean Is the first item selected when the completion menu appear
 
 --- @class blink.cmp.AutoBracketsConfig
 --- @field enabled boolean
@@ -247,7 +246,7 @@ local config = {
       -- which directions to show the window,
       -- falling back to the next direction when there's not enough space
       direction_priority = { 's', 'n' },
-      -- todo: implement
+      -- done: :)
       preselect = true,
       -- Controls how the completion items are rendered on the popup window
       -- 'simple' will render the item's kind icon the left alongside the label
