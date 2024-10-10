@@ -145,18 +145,7 @@ cmp.accept = function(key)
     if key then vim.schedule(function() insert_key(key) end) end
   end
 
-  require('blink.cmp.keymap').run_non_blink_keymap('i', key)
-
   if item then return true end
-end
-
-cmp.accept_fallback = function (key)
-  cmp.accept()
-
-  vim.notify("auto_select!")
-  require('blink.cmp.keymap').run_non_blink_keymap('i', key)
-
-  return true
 end
 
 cmp.select_prev = function()
